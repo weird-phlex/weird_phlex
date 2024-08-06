@@ -12,6 +12,10 @@ module WeirdPhlex
       def create_component_directory
         empty_directory WeirdPhlex.configuration.component_path
       end
+
+      def copy_components
+        directory "components", WeirdPhlex.configuration.component_path
+      end
     end
   end
 end
