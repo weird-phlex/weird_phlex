@@ -2,7 +2,7 @@
 
 module WeirdPhlex
   class AlertComponent < BaseComponent
-    def initialize(name:)
+    def initialize(name)
       @name = name
     end
   
