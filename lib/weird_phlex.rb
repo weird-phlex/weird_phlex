@@ -18,15 +18,4 @@ module WeirdPhlex
       yield(configuration)
     end
   end
-
-  # requires each component
-  # TODO: possibly export this logic to other file
-  def self.load_components
-    base_component = File.join(__dir__, "weird_phlex", "components", "base_component.rb")
-    require base_component
-
-    Dir[File.join(__dir__, "weird_phlex", "components", "**", "*.rb")].each { |file| require file }
-  end
-
-  load_components
 end
