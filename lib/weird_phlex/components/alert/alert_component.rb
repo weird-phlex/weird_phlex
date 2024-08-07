@@ -6,7 +6,7 @@ module WeirdPhlex
       @name = name
     end
 
-    def template
+    def view_template
       h1 { "👋 Hello #{@name}!" }
     end
   end
