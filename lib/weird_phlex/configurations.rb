@@ -11,17 +11,5 @@ module WeirdPhlex
     def initialize
       @component_path = "app/views/components/weird_phlex"
     end
-
-    class << self
-      attr_writer :configuration
-  
-      def configuration
-        @configuration ||= Configuration.new
-      end
-  
-      def configure
-        yield(configuration)
-      end
-    end
   end
 end
