@@ -5,9 +5,9 @@ module WeirdPhlex
     def initialize(name)
       @name = name
     end
-  
+
     def template
       h1 { "👋 Hello #{@name}!" }
     end
   end
-end 
+end

@@ -29,5 +29,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "combustion", ">= 1.1"
   s.add_development_dependency "rake", ">= 13.0"
   s.add_development_dependency "rspec", ">= 3.9"
-  s.add_development_dependency "phlex", "~> 1.1", ">= 1.1.2"
+
+  s.add_dependency "phlex", "~> 1.1", ">= 1.1.2"
 end

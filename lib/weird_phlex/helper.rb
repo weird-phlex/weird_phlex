@@ -5,5 +5,5 @@ module WeirdPhlex
     def render_alert(name)
       WeirdPhlex::AlertComponent.new(name).call
     end
-  end 
+  end
 end

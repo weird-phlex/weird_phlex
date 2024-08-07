@@ -1,7 +1,8 @@
 # frozen_string_literal: true
-require 'phlex'
+
+require "phlex"
 
 module WeirdPhlex
   class BaseComponent < Phlex::HTML
   end
-end 
+end
