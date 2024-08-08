@@ -1,0 +1,6 @@
+require "weird_phlex/core/node/index"
+require "weird_phlex/core/node/library"
+require "weird_phlex/core/node/variant"
+require "weird_phlex/core/node/component"
+require "weird_phlex/core/node/part"
+require "weird_phlex/core/node/file"
