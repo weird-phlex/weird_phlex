@@ -1,5 +1,6 @@
 require 'open3'
 require 'weird_phlex/core/component_pack'
+require 'weird_phlex/core/project'
 
 module WeirdPhlex
   module Core
