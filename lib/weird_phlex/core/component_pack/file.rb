@@ -29,7 +29,7 @@ module WeirdPhlex
           end
         end
 
-        attr_reader :component
+        attr_reader :component, :part, :file
 
         def ignored?
           !!@ignored
