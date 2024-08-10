@@ -63,10 +63,14 @@ module WeirdPhlex
           end
         end
 
-        attr_reader :file
+        attr_reader :file, :component
 
         def component_file?
-          weird_phlex_hash.present? || @broken_data
+          weird_phlex_hash.present? && !@shared_file && @component.present?
+        end
+
+        def weird_phlex_file?
+          component_file? || @broken_data
         end
 
         def to_s

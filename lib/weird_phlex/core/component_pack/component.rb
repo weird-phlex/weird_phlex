@@ -4,11 +4,13 @@ module WeirdPhlex
       class Component
         def initialize(name, files: [])
           @name = name
-          @file = files
+          @files = files
         end
 
+        attr_reader :files
+
         def to_s
-          "#{@name} - #{@file.count} file#{'s' if @file.count != 1}"
+          "#{@name} - #{@files.count} file#{'s' if @files.count != 1}"
         end
       end
     end
