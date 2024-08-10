@@ -1,22 +1,17 @@
 require 'open3'
-require 'weird_phlex/core/component_pack'
-require 'weird_phlex/core/project'
+require 'weird_phlex/core/component_pack/variant'
+require 'weird_phlex/core/project/file'
 
 module WeirdPhlex
   module Core
     class Indexer
 
-      def component_packs
-        output, error, status = Open3.capture3('bundle', 'list')
-        if status.success?
-          output
-            .lines
-            .map { |line| /\s(weird_phlex-[-_\w]+)\s/ =~ line; $1 }
-            .compact
-            .map{ WeirdPhlex::Core::ComponentPack.new(_1) }
-        else
-          raise "Bundler error:\n#{error}"
-        end
+      def self.component_pack_variants
+        WeirdPhlex::Core::ComponentPack::Variant.all
+      end
+
+      def self.project_files
+        WeirdPhlex::Core::Project::File.all
       end
 
     end

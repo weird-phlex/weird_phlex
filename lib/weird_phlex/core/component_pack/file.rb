@@ -1,6 +1,6 @@
 module WeirdPhlex
   module Core
-    class ComponentPack
+    module ComponentPack
       class File
         def initialize(path, component_path:)
           @path = path
