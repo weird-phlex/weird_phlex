@@ -1,13 +1,27 @@
+#!/usr/bin/env ruby
 
 require 'thor'
+require 'weird_phlex'
 
 module WeirdPhlex
   class CLI < Thor
 
-    desc "Hello World"
+    desc "generate [ARGS]", "generate selected komponent or -all"
     def generate(*args)
-
+      
     end
     map "g" => :generate
+
+    def self.exit_on_failure?
+      true
+    end
   end
+end
+
+# handle aliases
+case File.basename($PROGRAM_NAME)
+when 'weird_phlex', 'wph'
+  WeirdPhlex::CLI.start(ARGV)
+else
+  
 end
