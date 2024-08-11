@@ -12,19 +12,12 @@ module WeirdPhlex
         LIBRARAY_AND_VARIANT_REGEX = %r{\Aweird_phlex-(?<library>[_\w]+)-(?<variant>[_\w]+)\Z}
 
         def self.all
-          output, error, status = Open3.capture3("bundle", "list")
-          if status.success?
-            output
-              .lines
-              .map { |line|
-              /\s(weird_phlex-[-_\w]+)\s/ =~ line
-              $1
-            }
-              .compact
-              .map { new(_1) }
-          else
-            raise "Bundler error:\n#{error}"
-          end
+          lockfile = Bundler::LockfileParser.new(Bundler.read_file(Bundler.default_lockfile))
+          lockfile
+            .specs
+            .map(&:name)
+            .select { _1.match(LIBRARAY_AND_VARIANT_REGEX) }
+            .map { new(_1) }
         end
 
         def initialize(name)
