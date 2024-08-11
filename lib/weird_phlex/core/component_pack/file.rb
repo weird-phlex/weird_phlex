@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WeirdPhlex
   module Core
     module ComponentPack
@@ -7,15 +9,15 @@ module WeirdPhlex
           @raw_file = path
           @component_path = component_path
           @relative_path = @path.to_s.delete_prefix("#{@component_path}/")
-          split = @relative_path.split('/')
+          split = @relative_path.split("/")
 
-          if split.first == 'version.rb'
+          if split.first == "version.rb"
             @ignored = true
             @shared_file = false
             @component = nil
             @part = nil
             @file = nil
-          elsif split.first == 'shared'
+          elsif split.first == "shared"
             @shared_file = true
             @component = nil
             @part = nil
@@ -46,14 +48,13 @@ module WeirdPhlex
 
         def to_s
           if @ignored
-            'IGNORED'
+            "IGNORED"
           elsif @shared_file
             "SHARED FILE: #{@relative_path}"
           else
             "FILE: #{@component} - #{@part} - #{@file}"
           end
         end
-
       end
     end
   end

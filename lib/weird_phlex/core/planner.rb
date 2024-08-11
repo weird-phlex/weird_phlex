@@ -1,10 +1,11 @@
-require 'open3'
-require 'weird_phlex/core/project/target_file'
+# frozen_string_literal: true
+
+require "open3"
+require "weird_phlex/core/project/target_file"
 
 module WeirdPhlex
   module Core
     class Planner
-
       class Plan
         class CopyAction
           def initialize(source_file, target_file)
@@ -19,8 +20,8 @@ module WeirdPhlex
           def to_s
             <<~HEREDOC
               COPY:
-                #{@source_file.to_s}
-                #{@target_file.to_s}
+                #{@source_file}
+                #{@target_file}
             HEREDOC
           end
         end
@@ -36,7 +37,7 @@ module WeirdPhlex
         end
 
         def to_s
-          actions.each { puts _1.to_s }
+          actions.each { puts _1 }
         end
 
         def copy(source_file, target_file)
@@ -68,7 +69,6 @@ module WeirdPhlex
 
         plan
       end
-
     end
   end
 end

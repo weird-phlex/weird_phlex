@@ -1,10 +1,11 @@
-require 'weird_phlex/core/project/file'
+# frozen_string_literal: true
+
+require "weird_phlex/core/project/file"
 
 module WeirdPhlex
   module Core
     module Project
       class Component
-
         # Probably not correct. We might not want to group files from different libraries
         # and variants (inconsistent state) together.
         def self.all
@@ -22,7 +23,7 @@ module WeirdPhlex
         attr_reader :files
 
         def to_s
-          "#{@name} - #{@files.count} file#{'s' if @files.count != 1}"
+          "#{@name} - #{@files.count} file#{"s" if @files.count != 1}"
         end
       end
     end

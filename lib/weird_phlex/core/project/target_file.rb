@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WeirdPhlex
   module Core
     module Project
@@ -31,12 +33,12 @@ module WeirdPhlex
 
         def part_location
           case @part
-          when 'helper'
-            'app/helpers/components'
-          when 'partial'
-            'app/views/components'
-          when 'stimulus_controller'
-            'app/javascript/controllers/components'
+          when "helper"
+            "app/helpers/components"
+          when "partial"
+            "app/views/components"
+          when "stimulus_controller"
+            "app/javascript/controllers/components"
           else
             raise "Unknown part"
           end

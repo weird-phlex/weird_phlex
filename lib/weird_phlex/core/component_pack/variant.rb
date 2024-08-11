@@ -1,7 +1,9 @@
-require 'open3'
+# frozen_string_literal: true
 
-require 'weird_phlex/core/component_pack/component'
-require 'weird_phlex/core/component_pack/file'
+require "open3"
+
+require "weird_phlex/core/component_pack/component"
+require "weird_phlex/core/component_pack/file"
 
 module WeirdPhlex
   module Core
@@ -10,13 +12,16 @@ module WeirdPhlex
         LIBRARAY_AND_VARIANT_REGEX = %r{\Aweird_phlex-(?<library>[_\w]+)-(?<variant>[_\w]+)\Z}
 
         def self.all
-          output, error, status = Open3.capture3('bundle', 'list')
+          output, error, status = Open3.capture3("bundle", "list")
           if status.success?
             output
               .lines
-              .map { |line| /\s(weird_phlex-[-_\w]+)\s/ =~ line; $1 }
+              .map { |line|
+              /\s(weird_phlex-[-_\w]+)\s/ =~ line
+              $1
+            }
               .compact
-              .map{ new(_1) }
+              .map { new(_1) }
           else
             raise "Bundler error:\n#{error}"
           end
@@ -27,7 +32,7 @@ module WeirdPhlex
           @gem = name
           @gem_path = gem_path(name)
           @library, @variant = library_and_variant(name)
-          @component_path = @gem_path.join('lib', 'weird_phlex', @library, @variant)
+          @component_path = @gem_path.join("lib", "weird_phlex", @library, @variant)
         end
 
         def components
@@ -46,11 +51,11 @@ module WeirdPhlex
         private
 
         def file_paths
-          Dir['**/*', base: @component_path.to_s].map { @component_path.join(_1) }.select(&:file?)
+          Dir["**/*", base: @component_path.to_s].map { @component_path.join(_1) }.select(&:file?)
         end
-        
+
         def gem_path(name)
-          path, error, status = Open3.capture3('bundle', 'show', name)
+          path, error, status = Open3.capture3("bundle", "show", name)
           if status.success?
             Pathname.new(path.strip)
           else
@@ -59,7 +64,7 @@ module WeirdPhlex
         end
 
         def library_and_variant(name)
-          if matches = name.match(LIBRARAY_AND_VARIANT_REGEX)
+          if (matches = name.match(LIBRARAY_AND_VARIANT_REGEX))
             [matches[:library], matches[:variant]]
           else
             raise "Regex error: Could not parse component pack name '#{name}'!"
