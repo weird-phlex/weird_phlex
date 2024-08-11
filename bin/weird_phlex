@@ -1,0 +1,13 @@
+
+require 'thor'
+
+module WeirdPhlex
+  class CLI < Thor
+
+    desc "Hello World"
+    def generate(*args)
+
+    end
+    map "g" => :generate
+  end
+end
