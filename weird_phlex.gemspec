@@ -25,8 +25,13 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.required_ruby_version = ">= 2.7"
 
+
+  s.bindir = "bin"
+  s.executables = ["weird_phlex", "wph"]
+
   s.add_development_dependency "bundler", ">= 1.15"
   s.add_development_dependency "combustion", ">= 1.1"
   s.add_development_dependency "rake", ">= 13.0"
   s.add_development_dependency "rspec", ">= 3.9"
+  s.add_development_dependency "thor", ">= 1.3.1"
 end
