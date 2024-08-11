@@ -1,16 +1,32 @@
-#!/usr/bin/env ruby
-
 require 'thor'
 require 'weird_phlex'
 
 module WeirdPhlex
   class CLI < Thor
+    class_option :help, type: :boolean, aliases: '-h', desc: 'Display help for a command'
+    map "g" => :generate, "-l" => :list, "-d" => :diff, "-u" => :updated
 
-    desc "generate [ARGS]", "generate selected komponent or -all"
+    desc "generate [ARGS]", "generate selected component or -all"
     def generate(*args)
-      
+      p "generate"
+      p args
     end
-    map "g" => :generate
+    
+    desc "list", "list of all avaible components, alternativelly -l"
+    def list
+      p "a list"
+    end
+
+    desc "differnce", "checks for components that were not installed yet, alternativelly -d"
+    def diff
+      p "a differnce"
+    end
+
+    desc "updated [ARGS]", "checks if a specific component is up to date, or -all. alternativelly -u"
+    def updated(*args)
+      p "an updated"
+      p args
+    end
 
     def self.exit_on_failure?
       true
