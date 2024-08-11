@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "open3"
 require "weird_phlex/core/component_pack/variant"
 require "weird_phlex/core/project/file"
 require "weird_phlex/core/project/component"
