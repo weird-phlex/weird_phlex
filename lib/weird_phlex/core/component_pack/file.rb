@@ -4,6 +4,7 @@ module WeirdPhlex
       class File
         def initialize(path, component_path:)
           @path = path
+          @raw_file = path
           @component_path = component_path
           @relative_path = @path.to_s.delete_prefix("#{@component_path}/")
           split = @relative_path.split('/')
@@ -29,7 +30,7 @@ module WeirdPhlex
           end
         end
 
-        attr_reader :component, :part, :file
+        attr_reader :component, :part, :file, :raw_file
 
         def ignored?
           !!@ignored

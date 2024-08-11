@@ -17,7 +17,7 @@ module WeirdPhlex
 
         def initialize(path, project_path:)
           @path = Pathname.new(path)
-          @file = @path
+          @raw_file = @path
           @project_path = project_path
           @relative_project_path = @path.to_s.delete_prefix("#{@project_path}/")
 
@@ -30,7 +30,7 @@ module WeirdPhlex
             @shared_file = false
             @component = nil
             @part = nil
-            @part_file = nil
+            @file = nil
             return
           end
 
@@ -52,18 +52,18 @@ module WeirdPhlex
             @shared_file = true
             @component = nil
             @part = nil
-            @part_file = nil
+            @file = nil
           elsif (matches = @component_pack_path.match(%r{\A(?<component>.*_component)/(?<part>[^/]*)/(?<file>.*)}))
             @shared_file = false
             @component = matches[:component]
             @part = matches[:part]
-            @part_file = matches[:file]
+            @file = matches[:file]
           else
             raise "Regex error: could not parse file '#{@path}'"
           end
         end
 
-        attr_reader :file, :component
+        attr_reader :file, :component, :raw_file
 
         def component_file?
           weird_phlex_hash.present? && !@shared_file && @component.present?
@@ -80,7 +80,7 @@ module WeirdPhlex
             if @shared_file
               "SHARED FILE: #{@component_pack_path}"
             else
-              "FILE: #{@component} - #{@part} - #{@part_file}"
+              "FILE: #{@component} - #{@part} - #{@file}"
             end
           else
             'IGNORED'
@@ -90,7 +90,7 @@ module WeirdPhlex
         private
 
         def read_beginning
-          bytes = file.read(2_000)
+          bytes = raw_file.read(2_000)
           if bytes
             bytes.force_encoding('UTF-8').encode('UTF-8', undef: :replace, invalid: :replace, replace: '?')
           else
@@ -99,7 +99,7 @@ module WeirdPhlex
         end
 
         def extension
-          file.basename.to_s.delete_prefix('.').match(/(\..*)$/)
+          raw_file.basename.to_s.delete_prefix('.').match(/(\..*)$/)
           Regexp.last_match(1) || ''
         end
 

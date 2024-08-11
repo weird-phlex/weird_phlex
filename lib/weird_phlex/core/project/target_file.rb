@@ -22,8 +22,33 @@ module WeirdPhlex
           @file = file
         end
 
+        def raw_file
+          path = project_root.join(part_location, @file)
+          ::FileUtils.mkdir_p(path.parent)
+          ::FileUtils.touch(path)
+          path
+        end
+
+        def part_location
+          case @part
+          when 'helper'
+            'app/helpers/components'
+          when 'partial'
+            'app/views/components'
+          when 'stimulus_controller'
+            'app/javascript/controllers/components'
+          else
+            raise "Unknown part"
+          end
+        end
+
+        # A bit naive, copied from File
+        def project_root
+          Pathname.new(Dir.pwd)
+        end
+
         def to_s
-          "PLACEHOLDER: #{@component} - #{@part} - #{@file}"
+          "PLACEHOLDER: #{part_location}/#{@file}"
         end
       end
     end
