@@ -46,18 +46,7 @@ module WeirdPhlex
         private
 
         def file_paths
-          file_list, error, status = Open3.capture3(
-            'find', '.',
-            chdir: @component_path.to_s
-          )
-          if status.success?
-            file_list
-              .split(/[\r\n]+/)
-              .map { @component_path.join(_1) }
-              .select(&:file?)
-          else
-            raise "Git error:\n#{error}"
-          end
+          Dir['**/*', base: @component_path.to_s].map { @component_path.join(_1) }.select(&:file?)
         end
         
         def gem_path(name)

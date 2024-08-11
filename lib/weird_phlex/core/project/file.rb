@@ -134,21 +134,7 @@ module WeirdPhlex
           end
 
           def files_in(root)
-            (git_files(root, '--others', '--cached') - git_files(root, '--ignored', '--others', '--cached'))
-              .map { root.join(_1) }
-              .select(&:file?)
-          end
-
-          def git_files(root, *flags)
-            file_list, error, status = Open3.capture3(
-              'git', 'ls-files', *flags, '--exclude-standard',
-              chdir: root.to_s
-            )
-            if status.success?
-              file_list.split(/[\r\n]+/)
-            else
-              raise "Git error:\n#{error}"
-            end
+            Dir['**/*', base: root.to_s].map { root.join(_1) }.select(&:file?)
           end
 
         end
