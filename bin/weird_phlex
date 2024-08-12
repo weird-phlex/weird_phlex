@@ -4,11 +4,18 @@ require 'weird_phlex'
 module WeirdPhlex
   class CLI < Thor
     class_option :help, type: :boolean, aliases: '-h', desc: 'Display help for a command'
-    map "g" => :generate, "-l" => :list, "-d" => :diff, "-u" => :updated
+    map "g" => :generate, 
+    "-l" => :list, 
+    "-d" => :diff, 
+    "-u" => :update
 
     desc "generate [ARGS]", "generate selected component or -all"
     def generate(*args)
-      p "generate"
+      if args.empty?
+        puts "Error: No arguments provided. Use 'weird_phlex help #{__method__}' for more information."
+        return
+      end
+
       p args
     end
     
@@ -17,14 +24,18 @@ module WeirdPhlex
       p "a list"
     end
 
-    desc "differnce", "checks for components that were not installed yet, alternativelly -d"
+    desc "difference", "checks for components that were not installed yet, alternativelly -d"
     def diff
-      p "a differnce"
+      p "a difference"
     end
 
-    desc "updated [ARGS]", "checks if a specific component is up to date, or -all. alternativelly -u"
-    def updated(*args)
-      p "an updated"
+    desc "update [ARGS]", "checks if a specific component is up to date or -all. alternativelly -u"
+    def update(*args)
+      if args.empty?
+        puts "Error: No arguments provided. Use 'weird_phlex help #{__method__}' for more information."
+        return
+      end
+
       p args
     end
 
@@ -34,10 +45,6 @@ module WeirdPhlex
   end
 end
 
-# handle aliases
-case File.basename($PROGRAM_NAME)
-when 'weird_phlex', 'wph'
-  WeirdPhlex::CLI.start(ARGV)
-else
-  
-end
+
+
+WeirdPhlex::CLI.start(ARGV)
