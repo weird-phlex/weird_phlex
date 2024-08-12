@@ -16,17 +16,17 @@ module WeirdPhlex
         return
       end
 
-      p args
+      WeirdPhlex::Core::Main.generate(args)
     end
     
     desc "list", "list of all avaible components, alternativelly -l"
     def list
-      p "a list"
+      WeirdPhlex::Core::Main.list
     end
 
     desc "difference", "checks for components that were not installed yet, alternativelly -d"
     def diff
-      p "a difference"
+      WeirdPhlex::Core::Main.diff
     end
 
     desc "update [ARGS]", "checks if a specific component is up to date or -all. alternativelly -u"
@@ -36,7 +36,7 @@ module WeirdPhlex
         return
       end
 
-      p args
+      WeirdPhlex::Core::Main.update(args)
     end
 
     def self.exit_on_failure?
