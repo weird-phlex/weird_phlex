@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "open3"
 
 RSpec.describe "weird_phlex executable" do
@@ -6,13 +8,13 @@ RSpec.describe "weird_phlex executable" do
 
   describe "generate command" do
     it "prints an error when no arguments are provided" do
-      stdout, stderr, status = Open3.capture3(ruby, executable, "generate")
+      stdout, _, status = Open3.capture3(ruby, executable, "generate")
       expect(stdout).to include("Error: No arguments provided")
       expect(status.exitstatus).to eq(0)
     end
 
     it "calls generate with provided arguments" do
-      stdout, stderr, status = Open3.capture3(ruby, executable, "generate", "component1")
+      stdout, _, status = Open3.capture3(ruby, executable, "generate", "component1")
       expect(stdout).to include("component1")
       expect(status.exitstatus).to eq(0)
     end
@@ -20,7 +22,7 @@ RSpec.describe "weird_phlex executable" do
 
   describe "list command" do
     it "calls list method" do
-      stdout, stderr, status = Open3.capture3(ruby, executable, "list")
+      stdout, _, status = Open3.capture3(ruby, executable, "list")
       expect(stdout).to include("list(-l)")
       expect(status.exitstatus).to eq(0)
     end
@@ -28,7 +30,7 @@ RSpec.describe "weird_phlex executable" do
 
   describe "diff command" do
     it "calls diff method" do
-      stdout, stderr, status = Open3.capture3(ruby, executable, "diff")
+      stdout, _, status = Open3.capture3(ruby, executable, "diff")
       expect(stdout).to include("diff(-d)")
       expect(status.exitstatus).to eq(0)
     end
@@ -36,13 +38,13 @@ RSpec.describe "weird_phlex executable" do
 
   describe "update command" do
     it "prints an error when no arguments are provided" do
-      stdout, stderr, status = Open3.capture3(ruby, executable, "update")
+      stdout, _, status = Open3.capture3(ruby, executable, "update")
       expect(stdout).to include("Error: No arguments provided")
       expect(status.exitstatus).to eq(0)
     end
 
     it "calls update with provided arguments" do
-      stdout, stderr, status = Open3.capture3(ruby, executable, "update", "component1")
+      stdout, _, status = Open3.capture3(ruby, executable, "update", "component1")
       expect(stdout).to include("component1")
       expect(status.exitstatus).to eq(0)
     end
@@ -50,25 +52,25 @@ RSpec.describe "weird_phlex executable" do
 
   describe "command aliases" do
     it "recognizes 'g' as an alias for 'generate'" do
-      stdout, stderr, status = Open3.capture3(ruby, executable, "g", "component1")
+      stdout, _, status = Open3.capture3(ruby, executable, "g", "component1")
       expect(stdout).to include("component1")
       expect(status.exitstatus).to eq(0)
     end
 
     it "recognizes '-l' as an alias for 'list'" do
-      stdout, stderr, status = Open3.capture3(ruby, executable, "-l")
+      stdout, _, status = Open3.capture3(ruby, executable, "-l")
       expect(stdout).to include("list(-l)")
       expect(status.exitstatus).to eq(0)
     end
 
     it "recognizes '-d' as an alias for 'diff'" do
-      stdout, stderr, status = Open3.capture3(ruby, executable, "-d")
+      stdout, _, status = Open3.capture3(ruby, executable, "-d")
       expect(stdout).to include("diff(-d)")
       expect(status.exitstatus).to eq(0)
     end
 
     it "recognizes '-u' as an alias for 'update'" do
-      stdout, stderr, status = Open3.capture3(ruby, executable, "-u", "component1")
+      stdout, _, status = Open3.capture3(ruby, executable, "-u", "component1")
       expect(stdout).to include("component1")
       expect(status.exitstatus).to eq(0)
     end
@@ -76,7 +78,7 @@ RSpec.describe "weird_phlex executable" do
 
   describe "help option" do
     it "displays help information when --help is used" do
-      stdout, stderr, status = Open3.capture3(ruby, executable, "--help")
+      stdout, _, status = Open3.capture3(ruby, executable, "--help")
       expect(stdout).to include("Commands:")
       expect(stdout).to include("generate")
       expect(stdout).to include("list")
