@@ -7,6 +7,7 @@ end
 ENV["RAILS_ENV"] = "test"
 
 require "combustion"
+require "thor"
 require "weird_phlex"
 
 begin
