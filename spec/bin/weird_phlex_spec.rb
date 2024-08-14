@@ -1,64 +1,88 @@
-load File.expand_path("../../../bin/weird_phlex", __FILE__) # load executable bin/weird_phlex file
+require "open3"
 
-RSpec.describe WeirdPhlex::CLI do
-  let(:cli) { described_class.new }
+RSpec.describe "weird_phlex executable" do
+  let(:executable) { File.expand_path("../../../bin/weird_phlex", __FILE__) }
+  let(:ruby) { RbConfig.ruby }
 
-  before do
-    allow(WeirdPhlex::Core::Main).to receive(:generate)
-    allow(WeirdPhlex::Core::Main).to receive(:list)
-    allow(WeirdPhlex::Core::Main).to receive(:diff)
-    allow(WeirdPhlex::Core::Main).to receive(:update)
-  end
-
-  describe "#generate" do
-    it "calls generate method with provided arguments" do
-      cli.invoke(:generate, ["component_name"])
-      expect(WeirdPhlex::Core::Main).to have_received(:generate).with(["component_name"])
+  describe "generate command" do
+    it "prints an error when no arguments are provided" do
+      stdout, stderr, status = Open3.capture3(ruby, executable, "generate")
+      expect(stdout).to include("Error: No arguments provided")
+      expect(status.exitstatus).to eq(0)
     end
 
-    it "displays error when no arguments are provided" do
-      expect { cli.invoke(:generate) }.to output(/Error: No arguments provided/).to_stdout
+    it "calls generate with provided arguments" do
+      stdout, stderr, status = Open3.capture3(ruby, executable, "generate", "component1")
+      expect(stdout).to include("component1")
+      expect(status.exitstatus).to eq(0)
     end
   end
 
-  describe "#list" do
+  describe "list command" do
     it "calls list method" do
-      cli.invoke(:list)
-      expect(WeirdPhlex::Core::Main).to have_received(:list)
+      stdout, stderr, status = Open3.capture3(ruby, executable, "list")
+      expect(stdout).to include("list(-l)")
+      expect(status.exitstatus).to eq(0)
     end
   end
 
-  describe "#diff" do
+  describe "diff command" do
     it "calls diff method" do
-      cli.invoke(:diff)
-      expect(WeirdPhlex::Core::Main).to have_received(:diff)
+      stdout, stderr, status = Open3.capture3(ruby, executable, "diff")
+      expect(stdout).to include("diff(-d)")
+      expect(status.exitstatus).to eq(0)
     end
   end
 
-  describe "#update" do
-    it "calls update method with provided arguments" do
-      cli.invoke(:update, ["component_name"])
-      expect(WeirdPhlex::Core::Main).to have_received(:update).with(["component_name"])
+  describe "update command" do
+    it "prints an error when no arguments are provided" do
+      stdout, stderr, status = Open3.capture3(ruby, executable, "update")
+      expect(stdout).to include("Error: No arguments provided")
+      expect(status.exitstatus).to eq(0)
     end
 
-    it "displays error when no arguments are provided" do
-      expect { cli.invoke(:update) }.to output(/Error: No arguments provided/).to_stdout
+    it "calls update with provided arguments" do
+      stdout, stderr, status = Open3.capture3(ruby, executable, "update", "component1")
+      expect(stdout).to include("component1")
+      expect(status.exitstatus).to eq(0)
     end
   end
 
-  describe "thor integration" do
-    it "sets up correct command mappings" do
-      expect(described_class.commands["generate"].name).to eq("generate")
-      expect(described_class.commands["list"].name).to eq("list")
-      expect(described_class.commands["diff"].name).to eq("diff")
-      expect(described_class.commands["update"].name).to eq("update")
+  describe "command aliases" do
+    it "recognizes 'g' as an alias for 'generate'" do
+      stdout, stderr, status = Open3.capture3(ruby, executable, "g", "component1")
+      expect(stdout).to include("component1")
+      expect(status.exitstatus).to eq(0)
     end
 
-    it "sets up correct aliases" do
-      expect(described_class.map["g"]).to eq(:generate)
-      expect(described_class.map["-l"]).to eq(:list)
-      expect(described_class.map["-d"]).to eq(:diff)
-      expect(described_class.map["-u"]).to eq(:update)
+    it "recognizes '-l' as an alias for 'list'" do
+      stdout, stderr, status = Open3.capture3(ruby, executable, "-l")
+      expect(stdout).to include("list(-l)")
+      expect(status.exitstatus).to eq(0)
+    end
+
+    it "recognizes '-d' as an alias for 'diff'" do
+      stdout, stderr, status = Open3.capture3(ruby, executable, "-d")
+      expect(stdout).to include("diff(-d)")
+      expect(status.exitstatus).to eq(0)
+    end
+
+    it "recognizes '-u' as an alias for 'update'" do
+      stdout, stderr, status = Open3.capture3(ruby, executable, "-u", "component1")
+      expect(stdout).to include("component1")
+      expect(status.exitstatus).to eq(0)
+    end
+  end
+
+  describe "help option" do
+    it "displays help information when --help is used" do
+      stdout, stderr, status = Open3.capture3(ruby, executable, "--help")
+      expect(stdout).to include("Commands:")
+      expect(stdout).to include("generate")
+      expect(stdout).to include("list")
+      expect(stdout).to include("diff")
+      expect(stdout).to include("update")
+      expect(status.exitstatus).to eq(0)
     end
   end
 end

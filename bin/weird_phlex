@@ -46,7 +46,4 @@ module WeirdPhlex
 end
 
 
-# load only when calling direcly
-if $PROGRAM_NAME == __FILE__
-  WeirdPhlex::CLI.start(ARGV)
-end
+WeirdPhlex::CLI.start(ARGV)
