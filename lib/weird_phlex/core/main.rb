@@ -1,8 +1,8 @@
+# frozen_string_literal: true
 
 module WeirdPhlex
   module Core
     class Main
-
       class << self
         def generate(args)
           p "this method should be invoked from weird_phlex generate(g) [ARGS] executable"
@@ -22,7 +22,6 @@ module WeirdPhlex
           p "args: #{args}"
         end
       end
-
     end
   end
-end 
+end

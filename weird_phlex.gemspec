@@ -25,7 +25,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.required_ruby_version = ">= 2.7"
 
-
   s.bindir = "bin"
   s.executables = ["weird_phlex", "wph"]
 
