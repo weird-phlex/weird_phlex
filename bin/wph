@@ -1,4 +1,5 @@
-#!/usr/bin/env ruby
-require 'rubygems'
-gem 'weird_phlex'
-load Gem.bin_path('weird_phlex', 'weird_phlex')
+require 'thor'
+require 'weird_phlex'
+
+
+WeirdPhlex::Core::CLI.start(ARGV)
