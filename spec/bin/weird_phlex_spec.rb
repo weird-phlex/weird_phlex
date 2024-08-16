@@ -23,7 +23,7 @@ RSpec.describe "weird_phlex executable" do
   describe "list command" do
     it "calls list method" do
       stdout, _, status = Open3.capture3(ruby, executable, "list")
-      expect(stdout).to include("list(-l)")
+      expect(stdout).to include("list(l)")
       expect(status.exitstatus).to eq(0)
     end
   end
@@ -31,7 +31,7 @@ RSpec.describe "weird_phlex executable" do
   describe "diff command" do
     it "calls diff method" do
       stdout, _, status = Open3.capture3(ruby, executable, "diff")
-      expect(stdout).to include("diff(-d)")
+      expect(stdout).to include("diff(d)")
       expect(status.exitstatus).to eq(0)
     end
   end
@@ -57,20 +57,20 @@ RSpec.describe "weird_phlex executable" do
       expect(status.exitstatus).to eq(0)
     end
 
-    it "recognizes '-l' as an alias for 'list'" do
-      stdout, _, status = Open3.capture3(ruby, executable, "-l")
-      expect(stdout).to include("list(-l)")
+    it "recognizes 'l' as an alias for 'list'" do
+      stdout, _, status = Open3.capture3(ruby, executable, "l")
+      expect(stdout).to include("list(l)")
       expect(status.exitstatus).to eq(0)
     end
 
-    it "recognizes '-d' as an alias for 'diff'" do
-      stdout, _, status = Open3.capture3(ruby, executable, "-d")
-      expect(stdout).to include("diff(-d)")
+    it "recognizes 'd' as an alias for 'diff'" do
+      stdout, _, status = Open3.capture3(ruby, executable, "d")
+      expect(stdout).to include("diff(d)")
       expect(status.exitstatus).to eq(0)
     end
 
-    it "recognizes '-u' as an alias for 'update'" do
-      stdout, _, status = Open3.capture3(ruby, executable, "-u", "component1")
+    it "recognizes 'u' as an alias for 'update'" do
+      stdout, _, status = Open3.capture3(ruby, executable, "u", "component1")
       expect(stdout).to include("component1")
       expect(status.exitstatus).to eq(0)
     end

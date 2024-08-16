@@ -10,8 +10,6 @@ eval_gemfile "gemfiles/rubocop.gemfile"
 
 local_gemfile = "#{File.dirname(__FILE__)}/Gemfile.local"
 
-gem 'thor', '>= 1.3.1'
-
 if File.exist?(local_gemfile)
   eval(File.read(local_gemfile)) # rubocop:disable Security/Eval
 else
