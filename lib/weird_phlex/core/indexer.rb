@@ -11,11 +11,11 @@ module WeirdPhlex
         def component_pack_variants
           WeirdPhlex::Core::ComponentPack::Variant.all
         end
-  
+
         def project_files
           WeirdPhlex::Core::Project::File.all
         end
-  
+
         def project_components
           WeirdPhlex::Core::Project::Component.all
         end
