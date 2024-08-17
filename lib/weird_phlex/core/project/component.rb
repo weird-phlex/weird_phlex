@@ -6,6 +6,8 @@ module WeirdPhlex
   module Core
     module Project
       class Component
+        attr_reader :files
+
         # Probably not correct. We might not want to group files from different libraries
         # and variants (inconsistent state) together.
         def self.all
@@ -19,8 +21,6 @@ module WeirdPhlex
           @name = name
           @files = files
         end
-
-        attr_reader :files
 
         def to_s
           "#{@name} - #{@files.count} file#{"s" if @files.count != 1}"

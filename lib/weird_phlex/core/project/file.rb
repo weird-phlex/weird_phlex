@@ -6,6 +6,8 @@ module WeirdPhlex
       class File
         LIBRARAY_AND_VARIANT_REGEX = %r{\A(?<library>[^/]+)/(?<variant>[^/]+)/(?<component_pack_path>.*)\Z}
 
+        attr_reader :file, :component, :raw_file
+
         def self.all
           paths = if directories.empty?
             files_in(project_root)
@@ -64,8 +66,6 @@ module WeirdPhlex
             raise "Regex error: could not parse file '#{@path}'"
           end
         end
-
-        attr_reader :file, :component, :raw_file
 
         def component_file?
           weird_phlex_hash.present? && !@shared_file && @component.present?

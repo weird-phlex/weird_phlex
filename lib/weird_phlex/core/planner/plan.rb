@@ -7,11 +7,11 @@ module WeirdPhlex
   module Core
     class Planner
       class Plan
+        attr_reader :actions
+
         def initialize(actions = [])
           @actions = []
         end
-
-        attr_reader :actions
 
         def perform!
           actions.each(&:perform!)

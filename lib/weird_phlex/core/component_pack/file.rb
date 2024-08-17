@@ -4,6 +4,8 @@ module WeirdPhlex
   module Core
     module ComponentPack
       class File
+        attr_reader :component, :part, :file, :raw_file
+
         def initialize(path, component_path:)
           @path = path
           @raw_file = path
@@ -31,8 +33,6 @@ module WeirdPhlex
             raise "Regex error: could not parse file '#{@path}'"
           end
         end
-
-        attr_reader :component, :part, :file, :raw_file
 
         def ignored?
           !!@ignored
