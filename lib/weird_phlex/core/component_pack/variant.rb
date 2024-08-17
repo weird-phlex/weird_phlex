@@ -12,19 +12,19 @@ module WeirdPhlex
         LIBRARAY_AND_VARIANT_REGEX = %r{\Aweird_phlex-(?<library>[_\w]+)-(?<variant>[_\w]+)\Z}
 
         def self.all
-          lockfile = Bundler::LockfileParser.new(Bundler.read_file(Bundler.default_lockfile))
-          lockfile
-            .specs
-            .map(&:name)
-            .select { _1.match(LIBRARAY_AND_VARIANT_REGEX) }
+          # We assume that both `weird_phlex` and all component packs are loaded in Bundler group `:development`
+          # and are thus available at the same time.
+          Gem.loaded_specs
+            .select { |name, gem_specification| name.match(LIBRARAY_AND_VARIANT_REGEX) }
+            .values
             .map { new(_1) }
         end
 
-        def initialize(name)
-          @name = name
-          @gem = name
-          @gem_path = gem_path(name)
-          @library, @variant = library_and_variant(name)
+        def initialize(gem_specification)
+          @name = gem_specification.name
+          @gem = gem_specification.name
+          @gem_path = Pathname.new(gem_specification.gem_dir)
+          @library, @variant = library_and_variant(gem_specification.name)
           @component_path = @gem_path.join("lib", "weird_phlex", @library, @variant)
         end
 
@@ -43,17 +43,9 @@ module WeirdPhlex
 
         private
 
+        # Potentially use Gem::Specification.lib_files
         def file_paths
           Dir["**/*", base: @component_path.to_s].map { @component_path.join(_1) }.select(&:file?)
-        end
-
-        def gem_path(name)
-          path, error, status = Open3.capture3("bundle", "show", name)
-          if status.success?
-            Pathname.new(path.strip)
-          else
-            raise "Bundler error:\n#{error}"
-          end
         end
 
         def library_and_variant(name)
