@@ -1,0 +1,5 @@
+require 'thor'
+require 'weird_phlex'
+
+
+WeirdPhlex::Core::CLI.start(ARGV)
