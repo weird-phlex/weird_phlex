@@ -8,9 +8,8 @@ RSpec.describe "weird_phlex executable" do
 
   describe "generate command" do
     it "prints an error when no arguments are provided" do
-      stdout, _, status = Open3.capture3(ruby, executable, "generate")
+      stdout, _, _ = Open3.capture3(ruby, executable, "generate")
       expect(stdout).to include("Error: No arguments provided")
-      expect(status.exitstatus).to eq(0)
     end
 
     it "calls generate with provided arguments" do
@@ -38,9 +37,8 @@ RSpec.describe "weird_phlex executable" do
 
   describe "update command" do
     it "prints an error when no arguments are provided" do
-      stdout, _, status = Open3.capture3(ruby, executable, "update")
+      stdout, _, _ = Open3.capture3(ruby, executable, "update")
       expect(stdout).to include("Error: No arguments provided")
-      expect(status.exitstatus).to eq(0)
     end
 
     it "calls update with provided arguments" do

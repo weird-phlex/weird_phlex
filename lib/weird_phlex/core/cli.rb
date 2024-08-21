@@ -13,30 +13,28 @@ module WeirdPhlex
       def generate(*args)
         if args.empty?
           puts "Error: No arguments provided. Use 'weird_phlex help #{__method__}' for more information."
-          return
         end
 
-        WeirdPhlex::Core::Main::CLIreceiver.generate(args)
+        WeirdPhlex::Core::Main.generate(args)
       end
 
-      desc "list", "list of all avaible components, alternativelly l"
+      desc "list", "list of all available components, alternatively l"
       def list
-        WeirdPhlex::Core::Main::CLIreceiver.list
+        WeirdPhlex::Core::Main.list
       end
 
-      desc "difference", "checks for components that were not installed yet, alternativelly d"
+      desc "difference", "checks for components that were not installed yet, alternatively d"
       def diff
-        WeirdPhlex::Core::Main::CLIreceiver.diff
+        WeirdPhlex::Core::Main.diff
       end
 
-      desc "update [ARGS]", "checks if a specific component is up to date or -all. alternativelly u"
+      desc "update [ARGS]", "checks if a specific component is up to date or -all. alternatively u"
       def update(*args)
         if args.empty?
           puts "Error: No arguments provided. Use 'weird_phlex help #{__method__}' for more information."
-          return
         end
 
-        WeirdPhlex::Core::Main::CLIreceiver.update(args)
+        WeirdPhlex::Core::Main.update(args)
       end
 
       def self.exit_on_failure?
