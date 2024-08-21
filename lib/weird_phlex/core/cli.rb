@@ -13,6 +13,7 @@ module WeirdPhlex
       def generate(*args)
         if args.empty?
           puts "Error: No arguments provided. Use 'weird_phlex help #{__method__}' for more information."
+          exit(1)
         end
 
         WeirdPhlex::Core::Main.generate(args)
@@ -32,6 +33,7 @@ module WeirdPhlex
       def update(*args)
         if args.empty?
           puts "Error: No arguments provided. Use 'weird_phlex help #{__method__}' for more information."
+          exit(1)
         end
 
         WeirdPhlex::Core::Main.update(args)

@@ -6,77 +6,63 @@ RSpec.describe "weird_phlex executable" do
   let(:executable) { File.expand_path("../../../bin/weird_phlex", __FILE__) }
   let(:ruby) { RbConfig.ruby }
 
-  describe "generate command" do
+  def execute_command(*args)
+    Open3.capture3(ruby, executable, *args)
+  end
+
+  shared_examples "a command requiring arguments" do |command, alias_command|
     it "prints an error when no arguments are provided" do
-      stdout, _, _ = Open3.capture3(ruby, executable, "generate")
+      stdout, _, status = execute_command(command)
       expect(stdout).to include("Error: No arguments provided")
+      expect(status.exitstatus).to eq(1)
     end
 
-    it "calls generate with provided arguments" do
-      stdout, _, status = Open3.capture3(ruby, executable, "generate", "component1")
+    it "executes with provided arguments" do
+      stdout, _, status = execute_command(command, "component1")
       expect(stdout).to include("component1")
       expect(status.exitstatus).to eq(0)
     end
+
+    it "recognizes '#{alias_command}' as an alias" do
+      stdout, _, status = execute_command(alias_command, "component1")
+      expect(stdout).to include("component1")
+      expect(status.exitstatus).to eq(0)
+    end
+  end
+
+  shared_examples "a command without arguments" do |command, alias_command, expected_output|
+    it "executes successfully" do
+      stdout, _, status = execute_command(command)
+      expect(stdout).to include(expected_output)
+      expect(status.exitstatus).to eq(0)
+    end
+
+    it "recognizes '#{alias_command}' as an alias" do
+      stdout, _, status = execute_command(alias_command)
+      expect(stdout).to include(expected_output)
+      expect(status.exitstatus).to eq(0)
+    end
+  end
+
+  describe "generate command" do
+    include_examples "a command requiring arguments", "generate", "g"
   end
 
   describe "list command" do
-    it "calls list method" do
-      stdout, _, status = Open3.capture3(ruby, executable, "list")
-      expect(stdout).to include("list(l)")
-      expect(status.exitstatus).to eq(0)
-    end
+    include_examples "a command without arguments", "list", "l", "list(l)"
   end
 
   describe "diff command" do
-    it "calls diff method" do
-      stdout, _, status = Open3.capture3(ruby, executable, "diff")
-      expect(stdout).to include("diff(d)")
-      expect(status.exitstatus).to eq(0)
-    end
+    include_examples "a command without arguments", "diff", "d", "diff(d)"
   end
 
   describe "update command" do
-    it "prints an error when no arguments are provided" do
-      stdout, _, _ = Open3.capture3(ruby, executable, "update")
-      expect(stdout).to include("Error: No arguments provided")
-    end
-
-    it "calls update with provided arguments" do
-      stdout, _, status = Open3.capture3(ruby, executable, "update", "component1")
-      expect(stdout).to include("component1")
-      expect(status.exitstatus).to eq(0)
-    end
-  end
-
-  describe "command aliases" do
-    it "recognizes 'g' as an alias for 'generate'" do
-      stdout, _, status = Open3.capture3(ruby, executable, "g", "component1")
-      expect(stdout).to include("component1")
-      expect(status.exitstatus).to eq(0)
-    end
-
-    it "recognizes 'l' as an alias for 'list'" do
-      stdout, _, status = Open3.capture3(ruby, executable, "l")
-      expect(stdout).to include("list(l)")
-      expect(status.exitstatus).to eq(0)
-    end
-
-    it "recognizes 'd' as an alias for 'diff'" do
-      stdout, _, status = Open3.capture3(ruby, executable, "d")
-      expect(stdout).to include("diff(d)")
-      expect(status.exitstatus).to eq(0)
-    end
-
-    it "recognizes 'u' as an alias for 'update'" do
-      stdout, _, status = Open3.capture3(ruby, executable, "u", "component1")
-      expect(stdout).to include("component1")
-      expect(status.exitstatus).to eq(0)
-    end
+    include_examples "a command requiring arguments", "update", "u"
   end
 
   describe "help option" do
     it "displays help information when --help is used" do
-      stdout, _, status = Open3.capture3(ruby, executable, "--help")
+      stdout, _, status = execute_command("--help")
       expect(stdout).to include("Commands:")
       expect(stdout).to include("generate")
       expect(stdout).to include("list")
