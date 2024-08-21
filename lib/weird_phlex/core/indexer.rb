@@ -3,6 +3,7 @@
 require "weird_phlex/core/component_pack/variant"
 require "weird_phlex/core/project/file"
 require "weird_phlex/core/project/component"
+require "weird_phlex/core/project/config"
 
 module WeirdPhlex
   module Core

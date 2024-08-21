@@ -1,0 +1,22 @@
+default: &default
+  library: 'shadcn_ui'
+  variants: 
+    - stimulus
+    - static
+  part_paths:
+    helpers: 'app/helpers/components'
+    partials: 'app/views/components'
+  shared_paths:
+    helpers: 'app/helpers/shared'
+    partials: 'app/views/shared'
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
+  variants:
+    - static
