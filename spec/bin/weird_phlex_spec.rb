@@ -44,9 +44,9 @@ RSpec.describe "weird_phlex executable" do
     end
   end
 
-  describe "generate command" do
-    include_examples "a command requiring arguments", "generate", "g"
-  end
+  # describe "generate command" do
+  #   include_examples "a command requiring arguments", "generate", "g"
+  # end
 
   describe "list command" do
     include_examples "a command without arguments", "list", "l", "list(l)"

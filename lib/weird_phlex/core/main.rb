@@ -5,8 +5,8 @@ module WeirdPhlex
     class Main
       class << self
         def generate(args)
-          p "this method should be invoked from weird_phlex generate(g) [ARGS] executable"
-          p "args: #{args}"
+          p "this method should be invoked from weird_phlex generate(g) executable"
+          WeirdPhlex::Core::Planner.initial_full_installation_plan.perform!
         end
 
         def list

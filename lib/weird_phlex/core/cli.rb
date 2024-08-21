@@ -11,11 +11,6 @@ module WeirdPhlex
 
       desc "generate [ARGS]", "generate selected component or -all"
       def generate(*args)
-        if args.empty?
-          puts "Error: No arguments provided. Use 'weird_phlex help #{__method__}' for more information."
-          exit(1)
-        end
-
         WeirdPhlex::Core::Main.generate(args)
       end
 
