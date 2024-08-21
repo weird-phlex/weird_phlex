@@ -32,9 +32,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "combustion", ">= 1.1"
   s.add_development_dependency "rake", ">= 13.0"
   s.add_development_dependency "rspec", ">= 3.9"
-<<<<<<< HEAD
   s.add_dependency "thor", "~> 1.3"
-=======
-  s.add_dependency "thor", ">= 1.3.1"
->>>>>>> d53e2ee03f2cbb0c6d20684280d3765a80d31e13
 end
